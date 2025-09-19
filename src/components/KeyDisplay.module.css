@@ -1,5 +1,8 @@
 .currentKeys {
     grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    /* Позволяет сжиматься */
 }
 
 @media (min-width: 768px) {
@@ -23,6 +26,8 @@
     min-height: 120px;
     align-items: flex-start;
     align-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .key {

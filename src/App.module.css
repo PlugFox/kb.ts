@@ -68,6 +68,8 @@
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
@@ -81,6 +83,12 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  min-width: 0;
+  /* Позволяет сжиматься */
+  width: 100%;
+  max-width: 100%;
+  /* Не позволяет выходить за границы */
+  box-sizing: border-box;
 }
 
 /* Адаптивность для мобильных устройств */

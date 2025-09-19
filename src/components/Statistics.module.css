@@ -5,6 +5,12 @@
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    min-width: 0;
+    /* Позволяет сжиматься */
+    max-width: 100%;
+    /* Не позволяет выходить за границы родителя */
+    box-sizing: border-box;
 }
 
 .statsHeader {
@@ -41,21 +47,10 @@
 
 .statsGrid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1rem;
     margin-bottom: 2rem;
-}
-
-@media (min-width: 768px) {
-    .statsGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .statsGrid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    width: 100%;
 }
 
 .statCard {
@@ -67,6 +62,10 @@
     align-items: center;
     gap: 0.75rem;
     transition: all 0.2s ease;
+    min-width: 0;
+    /* Позволяет сжиматься */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .statCard:hover {
@@ -81,6 +80,10 @@
 
 .statContent {
     flex: 1;
+    min-width: 0;
+    /* Позволяет сжиматься */
+    overflow: hidden;
+    /* Предотвращает выход за границы */
 }
 
 .statValue {
@@ -88,6 +91,9 @@
     font-weight: 700;
     line-height: 1;
     margin-bottom: 0.25rem;
+    word-break: break-all;
+    /* Позволяет переносить длинные числа */
+    overflow-wrap: break-word;
 }
 
 .statLabel {
@@ -96,6 +102,9 @@
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    word-break: break-word;
+    /* Позволяет переносить длинные лейблы */
+    line-height: 1.2;
 }
 
 .popularKeys {
@@ -112,14 +121,9 @@
 
 .keysList {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 0.5rem;
-}
-
-@media (min-width: 768px) {
-    .keysList {
-        grid-template-columns: repeat(3, 1fr);
-    }
+    width: 100%;
 }
 
 .popularKey {
@@ -131,6 +135,10 @@
     align-items: center;
     gap: 0.5rem;
     transition: all 0.2s ease;
+    min-width: 0;
+    /* Позволяет сжиматься */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .popularKey:hover {
@@ -149,6 +157,11 @@
     font-size: 0.9rem;
     font-weight: 600;
     flex: 1;
+    min-width: 0;
+    /* Позволяет сжиматься */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .keyCount {
@@ -169,12 +182,16 @@
     }
 
     .statsGrid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         gap: 0.75rem;
     }
 
     .statCard {
         padding: 0.75rem;
+        flex-direction: column;
+        /* Вертикальное расположение на мобильных */
+        text-align: center;
+        gap: 0.5rem;
     }
 
     .statValue {
@@ -182,6 +199,18 @@
     }
 
     .keysList {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+
+    .popularKey {
+        padding: 0.4rem 0.5rem;
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+    }
+
+    .keyName {
+        white-space: normal;
+        /* Разрешаем перенос на мобильных */
     }
 }

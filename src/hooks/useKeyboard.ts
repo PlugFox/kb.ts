@@ -18,14 +18,38 @@ export const useKeyboard = (
   const keyPressStartTimes = new Map<string, number>();
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    // Не блокируем все события, только некоторые системные
-    const shouldPreventDefault = [
-      'F5', 'F11', 'F12', // Обновление страницы, полноэкранный режим
-    ].includes(event.code) ||
-    (event.ctrlKey && ['KeyR', 'KeyW', 'KeyT'].includes(event.code)); // Ctrl+R, Ctrl+W, Ctrl+T
+    // Разрешаем только критически важные системные комбинации
+    const allowedSystemCombinations = [
+      // Копирование/вставка/выделение (только если фокус на input/textarea)
+      (event.ctrlKey || event.metaKey) && ['KeyC', 'KeyV', 'KeyX', 'KeyA'].includes(event.code) &&
+        (event.target as HTMLElement)?.tagName?.match(/INPUT|TEXTAREA/),
 
-    if (shouldPreventDefault) {
+      // Отладка в браузере
+      event.key === 'F12',
+
+      // Обновление страницы (Ctrl+R, F5) - только если зажат Ctrl
+      (event.ctrlKey || event.metaKey) && event.code === 'KeyR',
+
+      // Закрытие вкладки (Ctrl+W) - только если зажат Ctrl
+      (event.ctrlKey || event.metaKey) && event.code === 'KeyW',
+
+      // Новая вкладка (Ctrl+T) - только если зажат Ctrl
+      (event.ctrlKey || event.metaKey) && event.code === 'KeyT',
+
+      // Переключение вкладок (Ctrl+Tab, Ctrl+Shift+Tab)
+      (event.ctrlKey || event.metaKey) && event.code === 'Tab',
+
+      // Адресная строка (Ctrl+L)
+      (event.ctrlKey || event.metaKey) && event.code === 'KeyL',
+
+      // Поиск на странице (Ctrl+F)
+      (event.ctrlKey || event.metaKey) && event.code === 'KeyF'
+    ];
+
+    // Блокируем все события кроме разрешенных системных
+    if (!allowedSystemCombinations.some(condition => condition)) {
       event.preventDefault();
+      event.stopPropagation();
     }
 
     const key = event.key === ' ' ? 'Space' : event.key;
@@ -72,6 +96,20 @@ export const useKeyboard = (
   };
 
   const handleKeyUp = (event: KeyboardEvent) => {
+    // Такая же логика блокировки как в keyDown
+    const allowedSystemCombinations = [
+      (event.ctrlKey || event.metaKey) && ['KeyC', 'KeyV', 'KeyX', 'KeyA'].includes(event.code) &&
+        (event.target as HTMLElement)?.tagName?.match(/INPUT|TEXTAREA/),
+      event.key === 'F12',
+      (event.ctrlKey || event.metaKey) && ['KeyR', 'KeyW', 'KeyT', 'KeyL', 'KeyF'].includes(event.code),
+      (event.ctrlKey || event.metaKey) && event.code === 'Tab'
+    ];
+
+    if (!allowedSystemCombinations.some(condition => condition)) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     const code = event.code;
 
     setPressedKeys(prev => {
@@ -96,13 +134,20 @@ export const useKeyboard = (
   };
 
   onMount(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
+    // Используем capture: true для перехвата событий раньше других обработчиков
+    document.addEventListener('keydown', handleKeyDown, { capture: true });
+    document.addEventListener('keyup', handleKeyUp, { capture: true });
+
+    // Дополнительно блокируем события на window для гарантии
+    window.addEventListener('keydown', handleKeyDown, { capture: true });
+    window.addEventListener('keyup', handleKeyUp, { capture: true });
   });
 
   onCleanup(() => {
-    document.removeEventListener('keydown', handleKeyDown);
-    document.removeEventListener('keyup', handleKeyUp);
+    document.removeEventListener('keydown', handleKeyDown, { capture: true });
+    document.removeEventListener('keyup', handleKeyUp, { capture: true });
+    window.removeEventListener('keydown', handleKeyDown, { capture: true });
+    window.removeEventListener('keyup', handleKeyUp, { capture: true });
     keyPressStartTimes.clear();
   });
 

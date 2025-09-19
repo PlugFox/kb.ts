@@ -5,6 +5,13 @@
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    min-width: 0;
+    /* Позволяет сжиматься */
+    box-sizing: border-box;
+    /* Включает padding и border в ширину */
+    max-width: 100%;
+    /* Не позволяет выходить за границы родителя */
 }
 
 .historyHeader {
@@ -50,6 +57,9 @@
     min-height: 150px;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
+    /* Убираем горизонтальную прокрутку */
+    width: 100%;
 }
 
 .historyContainer::-webkit-scrollbar {
@@ -79,8 +89,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
     animation: slideIn 0.3s ease-out;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    /* Позволяет сжиматься */
 }
 
 .historyItem[data-key-type="letter"] {
@@ -113,7 +127,7 @@
 
 .historyItem:hover {
     background: rgba(255, 255, 255, 0.15);
-    transform: translateX(4px);
+    /* Убираем transform translateX для предотвращения горизонтальной прокрутки */
 }
 
 @keyframes slideIn {
@@ -131,6 +145,10 @@
 .historyKeyLabel {
     font-size: 1rem;
     font-weight: 600;
+    flex-shrink: 0;
+    /* Не сжимается */
+    min-width: 0;
+    /* Но может переносить текст если нужно */
 }
 
 .historyKeyInfo {
@@ -138,6 +156,10 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 0.2rem;
+    flex-shrink: 1;
+    /* Может сжиматься если нужно */
+    min-width: 0;
+    text-align: right;
 }
 
 .historyKeyCode {

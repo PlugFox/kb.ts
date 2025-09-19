@@ -34,11 +34,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   /* Предотвращаем горизонтальную прокрутку */
+  /* Дополнительная защита от прокрутки клавишами */
+  overscroll-behavior: none;
 }
 
 html {
   margin: 0;
   padding: 0;
+  /* Отключаем стандартное поведение прокрутки */
+  scroll-behavior: auto;
 }
 
 code {
