@@ -1,14 +1,39 @@
+/* Фиксированный фоновый слой */
+.app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.app[data-theme="light"]::before {
+  background: linear-gradient(135deg, #e0f2fe 0%, #f3e5f5 100%);
+}
+
+/* Базовые стили */
 .app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   padding: 2rem 1rem;
+  position: relative;
+}
+
+/* Светлая тема */
+.app[data-theme="light"] {
+  color: #1a202c;
 }
 
 .header {
   text-align: center;
   margin-bottom: 3rem;
+  padding-top: 1rem;
+  /* Отступ для кнопки настроек */
 }
 
 .title {
@@ -22,6 +47,14 @@
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
+.app[data-theme="light"] .title {
+  background: linear-gradient(45deg, #1a202c, #4a5568);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+}
+
 .subtitle {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
   margin: 1rem 0 0 0;
@@ -30,160 +63,24 @@
 }
 
 .main {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  gap: 3rem;
+  gap: 2rem;
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 768px) {
   .main {
     grid-template-columns: 2fr 1fr;
+    gap: 3rem;
   }
 }
 
-.sectionTitle {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-  font-weight: 600;
-  margin: 0 0 1.5rem 0;
-  text-align: center;
-}
-
-.keysContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  min-height: 120px;
-  align-items: flex-start;
-  align-content: flex-start;
-}
-
-.key {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
+.sidebar {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 80px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  animation: keyPress 0.2s ease-out;
-  transition: all 0.3s ease;
-}
-
-.key:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-}
-
-@keyframes keyPress {
-  0% {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-
-  50% {
-    transform: scale(1.05);
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.keyLabel {
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: center;
-  line-height: 1;
-}
-
-.keyCode {
-  font-size: 0.75rem;
-  opacity: 0.7;
-  font-weight: 400;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.keyHistory {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-}
-
-.historyContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  min-height: 200px;
-}
-
-.historyItem {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.2s ease;
-  animation: slideIn 0.3s ease-out;
-}
-
-.historyItem:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateX(4px);
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.historyKeyLabel {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.historyKeyCode {
-  font-size: 0.8rem;
-  opacity: 0.7;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.emptyState {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 120px;
-  font-size: 1.1rem;
-  opacity: 0.6;
-  font-style: italic;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px dashed rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 2rem;
+  gap: 2rem;
 }
 
 /* Адаптивность для мобильных устройств */
@@ -197,31 +94,10 @@
   }
 
   .main {
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
-  .key {
-    padding: 0.75rem 1rem;
-    min-width: 60px;
-  }
-
-  .keyLabel {
-    font-size: 1.25rem;
-  }
-
-  .keyCode {
-    font-size: 0.7rem;
-  }
-
-  .keyHistory {
-    padding: 1.5rem;
-  }
-
-  .historyItem {
-    padding: 0.6rem 0.8rem;
-  }
-
-  .keysContainer {
-    gap: 0.75rem;
+  .sidebar {
+    gap: 1.5rem;
   }
 }

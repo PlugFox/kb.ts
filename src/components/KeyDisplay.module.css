@@ -1,0 +1,180 @@
+.currentKeys {
+    grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+    .currentKeys {
+        grid-column: 1 / 2;
+    }
+}
+
+.sectionTitle {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+}
+
+.keysContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    min-height: 120px;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.key {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 80px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    animation: keyPress 0.2s ease-out;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.key::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--key-color, rgba(255, 255, 255, 0.3));
+    opacity: 0.8;
+}
+
+.key[data-key-type="letter"]::before {
+    background: var(--key-color, #60a5fa);
+}
+
+.key[data-key-type="number"]::before {
+    background: var(--key-color, #34d399);
+}
+
+.key[data-key-type="modifier"]::before {
+    background: var(--key-color, #fbbf24);
+}
+
+.key[data-key-type="function"]::before {
+    background: var(--key-color, #a78bfa);
+}
+
+.key[data-key-type="special"]::before {
+    background: var(--key-color, #f87171);
+}
+
+.key[data-key-type="arrow"]::before {
+    background: var(--key-color, #22d3ee);
+}
+
+.key[data-key-type="punctuation"]::before {
+    background: var(--key-color, #a3e635);
+}
+
+.key:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes keyPress {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.keyLabel {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1;
+}
+
+.keyCode {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.keyType {
+    font-size: 0.65rem;
+    opacity: 0.6;
+    font-weight: 500;
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--key-color, currentColor);
+}
+
+.keyDuration {
+    font-size: 0.6rem;
+    opacity: 0.5;
+    font-weight: 400;
+    text-align: center;
+}
+
+.vkCode {
+    font-size: 0.55rem;
+    opacity: 0.6;
+    font-weight: 400;
+    text-align: center;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.emptyState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    font-size: 1.1rem;
+    opacity: 0.6;
+    font-style: italic;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+    .key {
+        padding: 0.75rem 1rem;
+        min-width: 60px;
+    }
+
+    .keyLabel {
+        font-size: 1.25rem;
+    }
+
+    .keyCode {
+        font-size: 0.65rem;
+    }
+
+    .keysContainer {
+        gap: 0.75rem;
+    }
+}
