@@ -4,7 +4,15 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ master ]
+    branches:
+      - master
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/deploy-pages.yml'
 
 permissions:
   contents: read
