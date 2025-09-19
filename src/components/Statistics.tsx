@@ -16,7 +16,7 @@ const Statistics: Component<StatisticsProps> = (props) => {
       'slow': 'Медленно',
       'medium': 'Средне',
       'fast': 'Быстро',
-      'very-fast': 'Очень быстро'
+      'very-fast': 'Спринт'
     };
     return labels[speed as keyof typeof labels] || speed;
   };

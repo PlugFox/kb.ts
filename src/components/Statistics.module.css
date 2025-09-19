@@ -47,23 +47,41 @@
 
 .statsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    /* По умолчанию 2 колонки */
     gap: 1rem;
     margin-bottom: 2rem;
     width: 100%;
+}
+
+/* Для средних экранов - проверяем ширину контейнера */
+@media (max-width: 920px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Для очень узких сайдбаров */
+@media (max-width: 400px) {
+    .statCard {
+        min-width: 100px;
+        /* Еще меньше для очень узких экранов */
+        padding: 1rem 0.5rem;
+    }
 }
 
 .statCard {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    padding: 1rem;
+    padding: 1.25rem 1rem;
+    /* Увеличили вертикальный padding */
     display: flex;
     align-items: center;
     gap: 0.75rem;
     transition: all 0.2s ease;
-    min-width: 0;
-    /* Позволяет сжиматься */
+    min-width: 140px;
+    /* Минимальная ширина для лучшего отображения */
     width: 100%;
     box-sizing: border-box;
 }
@@ -76,6 +94,11 @@
 .statIcon {
     font-size: 1.5rem;
     opacity: 0.9;
+    flex-shrink: 0;
+    /* Иконка не сжимается */
+    width: 24px;
+    /* Фиксированная ширина для выравнивания */
+    text-align: center;
 }
 
 .statContent {
@@ -182,16 +205,18 @@
     }
 
     .statsGrid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-columns: 1fr;
+        /* На мобильных всегда одна колонка */
         gap: 0.75rem;
     }
 
     .statCard {
-        padding: 0.75rem;
-        flex-direction: column;
-        /* Вертикальное расположение на мобильных */
-        text-align: center;
-        gap: 0.5rem;
+        padding: 1rem 0.75rem;
+        flex-direction: row;
+        /* Оставляем горизонтальное расположение */
+        text-align: left;
+        gap: 0.75rem;
+        min-width: 120px;
     }
 
     .statValue {

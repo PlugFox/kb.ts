@@ -145,10 +145,13 @@
 .historyKeyLabel {
     font-size: 1rem;
     font-weight: 600;
-    flex-shrink: 0;
-    /* Не сжимается */
+    flex: 0 0 35%;
+    /* Возвращаем разумное значение для равных колонок grid */
     min-width: 0;
-    /* Но может переносить текст если нужно */
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .historyKeyInfo {
@@ -156,8 +159,8 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 0.2rem;
-    flex-shrink: 1;
-    /* Может сжиматься если нужно */
+    flex: 1;
+    /* Занимает оставшиеся 60% */
     min-width: 0;
     text-align: right;
 }
@@ -168,6 +171,8 @@
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    word-break: break-word;
+    /* Разрешаем перенос длинных кодов */
 }
 
 .historyKeyType {
@@ -175,6 +180,12 @@
     opacity: 0.6;
     font-weight: 500;
     text-transform: capitalize;
+    word-break: break-word;
+    line-height: 1.2;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    /* Автоматические переносы */
 }
 
 .historyKeyDuration {
@@ -205,6 +216,22 @@
     padding: 2rem;
 }
 
+/* Адаптивность для больших экранов */
+@media (min-width: 1200px) {
+    .historyKeyLabel {
+        flex: 0 0 30%;
+        /* Разумное соотношение для больших экранов */
+    }
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 768px) {
+    .historyKeyLabel {
+        flex: 0 0 30%;
+        /* Сбалансированное соотношение для планшетов */
+    }
+}
+
 /* Адаптивность для мобильных устройств */
 @media (max-width: 480px) {
     .keyHistory {
@@ -213,9 +240,23 @@
 
     .historyItem {
         padding: 0.5rem 0.75rem;
+        flex-direction: column;
+        /* Вертикальное расположение на мобильных */
+        align-items: stretch;
+        gap: 0.5rem;
     }
 
     .historyKeyLabel {
         font-size: 0.9rem;
+        text-align: center;
+        flex: none;
+        /* Сбрасываем flex на мобильных */
+        white-space: normal;
+        /* Разрешаем перенос */
+    }
+
+    .historyKeyInfo {
+        align-items: center;
+        text-align: center;
     }
 }

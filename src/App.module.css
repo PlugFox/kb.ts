@@ -74,8 +74,18 @@
 
 @media (min-width: 768px) {
   .main {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    /* Равные колонки для сбалансированного макета */
     gap: 3rem;
+  }
+}
+
+/* Для очень широких экранов можно дать левой колонке чуть больше места */
+@media (min-width: 1400px) {
+  .main {
+    grid-template-columns: 3fr 2fr;
+    /* Слегка больше места для активных клавиш */
+    gap: 4rem;
   }
 }
 
